@@ -10,6 +10,8 @@ import Foundation
 
 protocol CoinManagerDelegate {
 
+	func coinManagerWillFetchCurrency(_ coinManager: CoinManager)
+
 	func coinManager(_ coinManager: CoinManager, didFetchCurrency currency: Double)
 
 	func coinManager(_ coinManager: CoinManager, didFailWithError error: Error)
@@ -28,6 +30,7 @@ struct CoinManager {
 
 	func getCoinPrice(for currency: String) {
 		let url = "\(baseURL)/\(currency)?apikey=\(apiKey)"
+		delegate?.coinManagerWillFetchCurrency(self)
 		performRequest(with: url)
 	}
 
@@ -38,9 +41,8 @@ struct CoinManager {
 				if let error = error {
 					delegate?.coinManager(self, didFailWithError: error)
 				}
-				if let data = data {
-					let bitcoinPrice = parseJSON(data)
-					delegate?.coinManager(self, didFetchCurrency: bitcoinPrice!)
+				if let data = data, let bitcoinPrice = parseJSON(data) {
+					delegate?.coinManager(self, didFetchCurrency: bitcoinPrice)
 				}
 			}
 			task.resume()
