@@ -95,8 +95,8 @@
 		ADA8AC1E2329370F00626376 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8D91C4BA28BEE7580022BC6F /* CoinData.swift */,
 				ADA8AC1F2329398300626376 /* CoinManager.swift */,
+				8D91C4BA28BEE7580022BC6F /* CoinData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
